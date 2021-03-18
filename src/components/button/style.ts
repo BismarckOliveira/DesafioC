@@ -8,6 +8,7 @@ width: 235px;
 border-radius: 5px;
 border: none;
 background: #2E50D4;
+color: #ffff;
 transition: background-color 0.2s;
 
 &:hover{

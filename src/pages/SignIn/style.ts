@@ -107,14 +107,6 @@ export const Content = styled.div`
         margin-top: 32px;
       }
 
-      button{
-        border: none;
-        background: none;
-        font-size: 16px;
-        color: #999392;
-      }
-    }
-
    > Button {
       margin-top: 68px;
       color: #ffffff;
@@ -130,6 +122,14 @@ export const Content = styled.div`
     }
     
   }
-
+  }
 `;
 
+export const Icon = styled.button`
+
+border: none;
+background: none;
+font-size: 16px;
+color: #999392;
+
+`;
