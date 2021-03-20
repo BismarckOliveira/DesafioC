@@ -1,29 +1,42 @@
-import React, { useContext } from 'react';
-import { 
-  Container, 
-  NavBar, 
-  NavBarContent, 
-  Section, 
-  BoxIlustration, 
-  Content, 
-  ContentContainer,
-  Icon } from './style'
-import Input from '../../components/input';
-import ImgIlustratio from '../../assets/ilustration.png';
+import React, { useCallback, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { BiHelpCircle } from 'react-icons/bi';
 import { AiFillEyeInvisible } from 'react-icons/ai';
+import {
+  Container,
+  NavBar,
+  NavBarContent,
+  Section,
+  BoxIlustration,
+  Content,
+  ContentContainer,
+  Icon,
+} from './style';
+import Input from '../../components/input';
+import ImgIlustratio from '../../assets/ilustration.png';
 import Button from '../../components/button';
-import logo from '../../assets/logo-conexa.png'
-import { AuthContext } from '../../context/AuthContext'
+import logo from '../../assets/logo-conexa.png';
+import { useAuth } from '../../hooks/AuthContext';
+
+interface ISigninData {
+  email: string;
+  password: string;
+}
 
 const SingIn: React.FC = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { signIn } = useAuth();
+  const history = useHistory();
 
-  const { signIn } = useContext(AuthContext);
+  const HandleSubmit = useCallback(async () => {
+    await signIn({
+      email,
+      password,
+    });
 
-  const handleSubmit = () => {
-    console.log(signIn);
-  }
-
+    history.push('/dashboard');
+  }, [signIn, history]);
 
   return (
     <Container>
@@ -39,17 +52,23 @@ const SingIn: React.FC = () => {
         </BoxIlustration>
         <ContentContainer>
           <Content>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={HandleSubmit}>
               <div>
                 <span>E-mail</span>
-                <Input placeholder="Digite seu e-mail" />
+                <Input
+                  value={email}
+                  onChange={e => e.target.value}
+                  placeholder="Digite seu e-mail"
+                />
               </div>
               <div>
                 <span>
                   Senha
-                <BiHelpCircle />
+                  <BiHelpCircle />
                 </span>
                 <Input
+                  value={password}
+                  onChange={e => e.target.value}
                   type="password"
                   placeholder="Digite sua senha"
                 >
@@ -58,15 +77,13 @@ const SingIn: React.FC = () => {
                   </Icon>
                 </Input>
               </div>
-              <Button type='submit'>
-                Entrar
-             </Button>
+              <Button type="submit">Entrar</Button>
             </form>
-
           </Content>
         </ContentContainer>
       </Section>
-    </Container>)
-}
+    </Container>
+  );
+};
 
 export default SingIn;

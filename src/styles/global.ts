@@ -6,7 +6,7 @@ h1{
   font-family: 'Montserrat';
 }
 
-span{
+span, strong, p{
   font-family: 'Nunito';
 }
 
@@ -14,4 +14,5 @@ button{
   cursor: pointer;
 }
 
-`
+
+`;
