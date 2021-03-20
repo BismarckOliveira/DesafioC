@@ -18,11 +18,6 @@ import Button from '../../components/button';
 import logo from '../../assets/logo-conexa.png';
 import { useAuth } from '../../hooks/AuthContext';
 
-interface ISigninData {
-  email: string;
-  password: string;
-}
-
 const SingIn: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -36,7 +31,7 @@ const SingIn: React.FC = () => {
     });
 
     history.push('/dashboard');
-  }, [signIn, history]);
+  }, [signIn, history, password, email]);
 
   return (
     <Container>
@@ -56,7 +51,7 @@ const SingIn: React.FC = () => {
               <div>
                 <span>E-mail</span>
                 <Input
-                  value={email}
+                  defaultValue={email}
                   onChange={e => e.target.value}
                   placeholder="Digite seu e-mail"
                 />
@@ -67,7 +62,7 @@ const SingIn: React.FC = () => {
                   <BiHelpCircle />
                 </span>
                 <Input
-                  value={password}
+                  defaultValue={password}
                   onChange={e => e.target.value}
                   type="password"
                   placeholder="Digite sua senha"
