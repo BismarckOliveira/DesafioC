@@ -1,7 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 import { BiHelpCircle } from 'react-icons/bi';
 import { AiFillEyeInvisible } from 'react-icons/ai';
+import { Form } from '@unform/web';
 import {
   Container,
   NavBar,
@@ -16,22 +17,23 @@ import Input from '../../components/input';
 import ImgIlustratio from '../../assets/ilustration.png';
 import Button from '../../components/button';
 import logo from '../../assets/logo-conexa.png';
-import { useAuth } from '../../hooks/AuthContext';
+import { useAuth, ISinginCredentials } from '../../hooks/AuthContext';
 
 const SingIn: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
   const { signIn } = useAuth();
   const history = useHistory();
 
-  const HandleSubmit = useCallback(async () => {
-    await signIn({
-      email,
-      password,
-    });
+  const HandleSubmit = useCallback(
+    async (data: ISinginCredentials) => {
+      await signIn({
+        email: data.email,
+        password: data.password,
+      });
 
-    history.push('/dashboard');
-  }, [signIn, history, password, email]);
+      history.push('/dashboard');
+    },
+    [signIn, history],
+  );
 
   return (
     <Container>
@@ -47,14 +49,10 @@ const SingIn: React.FC = () => {
         </BoxIlustration>
         <ContentContainer>
           <Content>
-            <form onSubmit={HandleSubmit}>
+            <Form onSubmit={HandleSubmit}>
               <div>
                 <span>E-mail</span>
-                <Input
-                  defaultValue={email}
-                  onChange={e => e.target.value}
-                  placeholder="Digite seu e-mail"
-                />
+                <Input name="email" placeholder="Digite seu e-mail" />
               </div>
               <div>
                 <span>
@@ -62,8 +60,7 @@ const SingIn: React.FC = () => {
                   <BiHelpCircle />
                 </span>
                 <Input
-                  defaultValue={password}
-                  onChange={e => e.target.value}
+                  name="password"
                   type="password"
                   placeholder="Digite sua senha"
                 >
@@ -73,7 +70,7 @@ const SingIn: React.FC = () => {
                 </Input>
               </div>
               <Button type="submit">Entrar</Button>
-            </form>
+            </Form>
           </Content>
         </ContentContainer>
       </Section>
