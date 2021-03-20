@@ -8,7 +8,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 
 const Input: React.FC<InputProps> = ({ name, children, ...rest }) => {
   const inputRef = useRef(null);
-  const { fieldName, error, registerField } = useField(name);
+  const { fieldName, registerField } = useField(name);
 
   useEffect(() => {
     registerField({
