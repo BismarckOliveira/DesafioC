@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import {
   Container,
   NavBar,
@@ -10,8 +10,15 @@ import {
 } from './style';
 import logo from '../../assets/logo-conexa.png';
 import Button from '../../components/button';
+import { useAuth } from '../../hooks/AuthContext';
 
 const Dasboard: React.FC = () => {
+  const { signOut } = useAuth();
+
+  const HandleSingOut = useCallback(() => {
+    signOut();
+  }, [signOut]);
+
   return (
     <Container>
       <NavBar>
@@ -19,7 +26,7 @@ const Dasboard: React.FC = () => {
           <img src={logo} alt="ConexaLogo" />
           <div>
             <span>Olá Dr Gandalf</span>
-            <Button>Sair</Button>
+            <Button onClick={HandleSingOut}>Sair</Button>
           </div>
         </NavBarContent>
       </NavBar>
