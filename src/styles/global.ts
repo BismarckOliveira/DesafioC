@@ -8,6 +8,8 @@ h1{
 
 span, strong, p{
   font-family: 'Nunito';
+  font-style: normal;
+  font-weight: normal;
 }
 
 button{

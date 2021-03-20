@@ -53,8 +53,11 @@ const Dasboard: React.FC = () => {
         </ul>
       </Section>
       <Footer>
-        <Button className="ajuda">Ajuda</Button>
-        <Button className="novaConsulta">Agendar Consulta</Button>
+        <hr />
+        <div>
+          <Button className="ajuda">Ajuda</Button>
+          <Button className="novaConsulta">Agendar Consulta</Button>
+        </div>
       </Footer>
     </Container>
   );

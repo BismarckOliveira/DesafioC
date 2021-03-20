@@ -40,10 +40,13 @@ export const NavBarContent = styled.div`
   }
 
   @media screen and (max-width: 800px) {
-    display: flex;
-    justify-content: center;
     img {
       height: 30px;
+    }
+    div {
+      span {
+        display: none;
+      }
     }
   }
 `;
@@ -58,6 +61,11 @@ export const Header = styled.header`
     padding-left: 29px;
     padding-top: 32px;
     margin: 0;
+  }
+  @media screen and (max-width: 800px) {
+    h1 {
+      font-size: 28px;
+    }
   }
 `;
 
@@ -82,11 +90,29 @@ export const Section = styled.section`
       display: flex;
       justify-content: space-between;
       margin-bottom: 32px;
+      strong {
+        font-size: 16px;
+        line-height: 20px;
+      }
+
+      span {
+        font-size: 12px;
+        line-height: 20px;
+      }
 
       button {
         width: 75px;
         height: 40px;
       }
+    }
+  }
+
+  @media screen and (max-width: 800px) {
+    ul {
+      width: 288px;
+      height: 180px;
+      padding: 0px;
+      margin: 0px;
     }
   }
 `;
@@ -97,15 +123,20 @@ export const Description = styled.div`
 `;
 
 export const Footer = styled.footer`
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-
+  position: fixed;
   left: 0px;
   right: 1px;
   bottom: 0px;
   padding: 16px;
+  hr {
+    display: none;
+  }
+
+  div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 
   .ajuda {
     width: 75px;
@@ -123,5 +154,13 @@ export const Footer = styled.footer`
   .novaConsulta {
     width: 154px;
     height: 40px;
+  }
+
+  @media screen and (max-width: 800px) {
+    hr {
+      display: block;
+      border: 1px solid #dad2d0;
+      box-sizing: border-box;
+    }
   }
 `;
