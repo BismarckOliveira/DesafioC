@@ -5,7 +5,6 @@ export const Container = styled.div``;
 export const NavBar = styled.header`
   background: #fffffb;
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.05);
-  max-width: 1366px;
   height: 57px;
 `;
 
@@ -19,9 +18,6 @@ export const NavBarContent = styled.div`
   @media screen and (max-width: 800px) {
     display: flex;
     justify-content: center;
-    img {
-      height: 30px;
-    }
   }
 `;
 
@@ -43,10 +39,10 @@ export const BoxIlustration = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  max-width: 480px;
-  max-height: 444px;
-  padding-left: 70px;
-  padding-top: 60px;
+  width: 480px;
+  height: 444px;
+  margin-left: 70px;
+  margin-top: 60px;
 
   h1 {
     font-size: 52px;
@@ -56,16 +52,19 @@ export const BoxIlustration = styled.div`
 
   img {
     flex: 1;
-    padding: 50px;
+    margin-top: 67px;
   }
 
   @media screen and (max-width: 800px) {
     padding: 0px;
     margin-top: 35px;
     margin-bottom: 44px;
+    margin-left: 0;
+    height: auto;
+    width: auto;
     h1 {
       flex: 1;
-      font-size: 42px;
+      font-size: 32px;
     }
   }
 `;
@@ -79,8 +78,8 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+
   height: 100%;
-  max-width: 746px;
 
   form {
     span {
