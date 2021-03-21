@@ -6,7 +6,7 @@ export const Container = styled.div``;
 export const NavBar = styled.header`
   background: #fffffb;
   box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.05);
-  max-width: 1366px;
+
   height: 57px;
 `;
 

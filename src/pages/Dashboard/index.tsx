@@ -51,8 +51,6 @@ const Dasboard: React.FC = () => {
     ListPacients();
   }, []);
 
-  console.log(pacient);
-
   return (
     <Container>
       <NavBar>
