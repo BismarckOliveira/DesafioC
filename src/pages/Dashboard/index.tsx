@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import { tokenToString } from 'typescript';
+import React, { useEffect, useCallback, useState } from 'react';
 import {
   Container,
   NavBar,
@@ -14,38 +13,46 @@ import Button from '../../components/button';
 import { useAuth } from '../../hooks/AuthContext';
 import api from '../../services/api';
 
-interface Pacient {
+interface IPacient {
+  id: 1;
+  first_name: string;
+  last_name: string;
+}
+
+interface Iconsultations {
   id: number;
+  pacient: IPacient;
   date: string;
-  name: string;
 }
 
 const Dasboard: React.FC = () => {
   const { signOut, name } = useAuth();
+  const [consult, setconsult] = useState<Iconsultations[]>([]);
 
   const HandleSingOut = useCallback(() => {
     signOut();
   }, [signOut]);
 
-  const ListConsultations = useCallback(async () => {
-    const token = localStorage.getItem('@Conexa:token');
+  useEffect(() => {
+    async function ListConsultations() {
+      const token = localStorage.getItem('@Conexa:token');
 
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const response = await api.get(`consultations?_expand=${name}`, config);
+      setconsult(response.data);
+    }
+    ListConsultations();
+  }, []);
 
-    const response = await api.get(`consultations?_expand=${name}`, config);
-    console.log(response.data);
-  }, [name]);
-
-  ListConsultations();
   return (
     <Container>
       <NavBar>
         <NavBarContent>
           <img src={logo} alt="ConexaLogo" />
           <div>
-            <span>Olá Dr Gandalf</span>
+            <span>Olá Dr {name}</span>
             <Button onClick={HandleSingOut}>Sair</Button>
           </div>
         </NavBarContent>
@@ -55,28 +62,16 @@ const Dasboard: React.FC = () => {
       </Header>
       <Section>
         <ul>
-          <p>3 consultas agendadas</p>
-          <li>
-            <Description>
-              <strong>Pedro Marinho dos Santos</strong>
-              <span>10/12/2021 às 10:20</span>
-            </Description>
-            <Button>Atender</Button>
-          </li>
-          <li>
-            <Description>
-              <strong>Pedro Marinho dos Santos</strong>
-              <span>10/12/2021 às 10:20</span>
-            </Description>
-            <Button>Atender</Button>
-          </li>
-          <li>
-            <Description>
-              <strong>Pedro Marinho dos Santos</strong>
-              <span>10/12/2021 às 10:20</span>
-            </Description>
-            <Button>Atender</Button>
-          </li>
+          <p>{consult.length} consultas agendadas</p>
+          {consult.map(c => (
+            <li key={c.id}>
+              <Description>
+                <strong>fulano</strong>
+                <span>{c.date}</span>
+              </Description>
+              <Button>Atender</Button>
+            </li>
+          ))}
         </ul>
       </Section>
       <Footer>
