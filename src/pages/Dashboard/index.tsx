@@ -1,4 +1,5 @@
 import React, { useCallback } from 'react';
+import { tokenToString } from 'typescript';
 import {
   Container,
   NavBar,
@@ -11,14 +12,33 @@ import {
 import logo from '../../assets/logo-conexa.png';
 import Button from '../../components/button';
 import { useAuth } from '../../hooks/AuthContext';
+import api from '../../services/api';
+
+interface Pacient {
+  id: number;
+  date: string;
+  name: string;
+}
 
 const Dasboard: React.FC = () => {
-  const { signOut } = useAuth();
+  const { signOut, name } = useAuth();
 
   const HandleSingOut = useCallback(() => {
     signOut();
   }, [signOut]);
 
+  const ListConsultations = useCallback(async () => {
+    const token = localStorage.getItem('@Conexa:token');
+
+    const config = {
+      headers: { Authorization: `Bearer ${token}` },
+    };
+
+    const response = await api.get(`consultations?_expand=${name}`, config);
+    console.log(response.data);
+  }, [name]);
+
+  ListConsultations();
   return (
     <Container>
       <NavBar>
