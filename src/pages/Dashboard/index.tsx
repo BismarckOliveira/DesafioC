@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState } from 'react';
 import {
   Container,
   NavBar,
@@ -14,35 +14,38 @@ import { useAuth } from '../../hooks/AuthContext';
 import api from '../../services/api';
 
 interface IPacient {
-  id: number;
-  date: string;
+  id: 1;
+  first_name: string;
+  last_name: string;
 }
 
-interface IConsults {
-  list: IPacient[];
+interface Iconsultations {
+  id: number;
+  pacient: IPacient;
+  date: string;
 }
 
 const Dasboard: React.FC = () => {
   const { signOut, name } = useAuth();
-  const [consult, setconsult] = useState<IConsults>();
+  const [consult, setconsult] = useState<Iconsultations[]>([]);
 
   const HandleSingOut = useCallback(() => {
     signOut();
   }, [signOut]);
 
-  const ListConsultations = useCallback(async () => {
-    const token = localStorage.getItem('@Conexa:token');
+  useEffect(() => {
+    async function ListConsultations() {
+      const token = localStorage.getItem('@Conexa:token');
 
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
+      const config = {
+        headers: { Authorization: `Bearer ${token}` },
+      };
+      const response = await api.get(`consultations?_expand=${name}`, config);
+      setconsult(response.data);
+    }
+    ListConsultations();
+  }, []);
 
-    const response = await api.get(`consultations?_expand=${name}`, config);
-
-    setconsult(response.data);
-  }, [name]);
-
-  ListConsultations();
   return (
     <Container>
       <NavBar>
@@ -58,18 +61,18 @@ const Dasboard: React.FC = () => {
         <h1>Consultas</h1>
       </Header>
       <Section>
-        {consult?.list.map(consults => (
-          <ul key={consults.id}>
-            <p>3 consultas agendadas</p>
-            <li>
+        <ul>
+          <p>{consult.length} consultas agendadas</p>
+          {consult.map(c => (
+            <li key={c.id}>
               <Description>
-                <strong>{name}</strong>
-                <span>{consults.date}</span>
+                <strong>fulano</strong>
+                <span>{c.date}</span>
               </Description>
               <Button>Atender</Button>
             </li>
-          </ul>
-        ))}
+          ))}
+        </ul>
       </Section>
       <Footer>
         <hr />
