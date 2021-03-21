@@ -1,5 +1,4 @@
-import React, { useCallback } from 'react';
-import { tokenToString } from 'typescript';
+import React, { useCallback, useState } from 'react';
 import {
   Container,
   NavBar,
@@ -14,14 +13,18 @@ import Button from '../../components/button';
 import { useAuth } from '../../hooks/AuthContext';
 import api from '../../services/api';
 
-interface Pacient {
+interface IPacient {
   id: number;
   date: string;
-  name: string;
+}
+
+interface IConsults {
+  list: IPacient[];
 }
 
 const Dasboard: React.FC = () => {
   const { signOut, name } = useAuth();
+  const [consult, setconsult] = useState<IConsults>();
 
   const HandleSingOut = useCallback(() => {
     signOut();
@@ -35,7 +38,8 @@ const Dasboard: React.FC = () => {
     };
 
     const response = await api.get(`consultations?_expand=${name}`, config);
-    console.log(response.data);
+
+    setconsult(response.data);
   }, [name]);
 
   ListConsultations();
@@ -45,7 +49,7 @@ const Dasboard: React.FC = () => {
         <NavBarContent>
           <img src={logo} alt="ConexaLogo" />
           <div>
-            <span>Olá Dr Gandalf</span>
+            <span>Olá Dr {name}</span>
             <Button onClick={HandleSingOut}>Sair</Button>
           </div>
         </NavBarContent>
@@ -54,30 +58,18 @@ const Dasboard: React.FC = () => {
         <h1>Consultas</h1>
       </Header>
       <Section>
-        <ul>
-          <p>3 consultas agendadas</p>
-          <li>
-            <Description>
-              <strong>Pedro Marinho dos Santos</strong>
-              <span>10/12/2021 às 10:20</span>
-            </Description>
-            <Button>Atender</Button>
-          </li>
-          <li>
-            <Description>
-              <strong>Pedro Marinho dos Santos</strong>
-              <span>10/12/2021 às 10:20</span>
-            </Description>
-            <Button>Atender</Button>
-          </li>
-          <li>
-            <Description>
-              <strong>Pedro Marinho dos Santos</strong>
-              <span>10/12/2021 às 10:20</span>
-            </Description>
-            <Button>Atender</Button>
-          </li>
-        </ul>
+        {consult?.list.map(consults => (
+          <ul key={consults.id}>
+            <p>3 consultas agendadas</p>
+            <li>
+              <Description>
+                <strong>{name}</strong>
+                <span>{consults.date}</span>
+              </Description>
+              <Button>Atender</Button>
+            </li>
+          </ul>
+        ))}
       </Section>
       <Footer>
         <hr />
