@@ -40,19 +40,17 @@ export const BoxIlustration = styled.div`
   align-items: center;
   justify-content: center;
   width: 480px;
-  height: 444px;
-  margin-left: 70px;
-  margin-top: 60px;
+  height: 100%;
+  margin: 60px 0px 64px 70px;
 
   h1 {
     font-size: 52px;
     color: #1c307f;
-    margin: 0;
+    margin-bottom: 67px;
   }
 
   img {
     flex: 1;
-    margin-top: 67px;
   }
 
   @media screen and (max-width: 800px) {
@@ -78,6 +76,7 @@ export const Content = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  margin-right: 70px;
 
   height: 100%;
 
